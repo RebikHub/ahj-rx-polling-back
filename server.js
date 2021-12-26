@@ -8,16 +8,24 @@ const { v4: uuidv4 } = require('uuid');
 const router = new Router();
 const app = new Koa();
 
-const messages = {
-    unread: [
-        {
+const objectMessages = {
+    status: 'ok',
+    timestamp: new Date().getTime(),
+    messages: [],
+}
+
+function generationMessage(array) {
+    const timer = Math.random() * 100000;
+    setTimeout(() => {
+        array.push({
             id: uuidv4(),
             from: faker.internet.email(),
             subject: `Hello from ${faker.name.findName()}`,
             body: faker.lorem.words(5),
             received: faker.time.recent(),
-        }
-    ]
+        })
+    }, timer);
+    console.log(timer);
 }
 
 app.use(koaBody({
@@ -35,7 +43,9 @@ app.use(cors({
 }));
 
 router.get('/messages/unread', async (ctx) => {
-    ctx.response.body = messages.unread;
+    generationMessage(objectMessages.messages);
+    console.log(objectMessages.messages);
+    ctx.response.body = objectMessages;
     ctx.status = 200;
 });
 
