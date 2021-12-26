@@ -3,7 +3,7 @@ const koaBody = require('koa-body');
 const cors = require('koa2-cors');
 const Router = require('koa-router');
 const faker = require('faker');
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const router = new Router();
 const app = new Koa();
@@ -11,9 +11,11 @@ const app = new Koa();
 const messages = {
     unread: [
         {
-            id: uuid(),
-            name: faker.name.findName(),
-            from: faker.address.city(),
+            id: uuidv4(),
+            from: faker.internet.email(),
+            subject: `Hello from ${faker.name.findName()}`,
+            body: faker.lorem.words(5),
+            received: faker.time.recent(),
         }
     ]
 }
