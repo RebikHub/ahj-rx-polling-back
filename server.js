@@ -15,7 +15,7 @@ const objectMessages = {
 }
 
 function generationMessage(array) {
-    const timer = Math.random() * 100000;
+    const timer = Math.random() * 1000000;
     setTimeout(() => {
         array.push({
             id: uuidv4(),
